@@ -7,8 +7,8 @@ namespace Tests
         static void Main(string[] args)
         {
 	        //ExcelFileFormer.FormFile();
-			ExcelFileFormer.FormFile();
-	        //Class1.Test();
+			//ExcelFileFormer.FormFile();
+	        Class1.Test();
 
 	        Console.ReadLine();
         }

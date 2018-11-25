@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading;
 
 using OpenQA.Selenium;
@@ -20,9 +20,14 @@ namespace FacebookDataGrabber
 		}
 	}
 
-    public class FacebookGrabber
-    {
+    public class FacebookGrabber: IDisposable
+	{
         private ChromeDriver chromeDriver;
+
+		public void Dispose()
+		{
+			chromeDriver.Close();
+		}
 
         public FacebookGrabber(string url)
         {

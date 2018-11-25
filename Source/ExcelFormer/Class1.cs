@@ -32,14 +32,15 @@ namespace Tests
 				"ammix@ukr.net 098 66 03 456",
 				"ammix@ukr.net 098 6 6 0 3 4 5 6",
 				"ammix@ukr.net 098 6 6 0-3 4 5 6",
-				"ammix@ukr.net 0 9 8 6 6 0 3 4 5 6"
+				"ammix@ukr.net 0 9 8 6 6 0 3 4 5 6",
+				"ammix@ukr.net +380 98 6 6 0 3 4 5 6"
 			};
 
 			var emailRegex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
 
 			//var phoneRegex = new Regex(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}");
 
-			var phoneRegex = new Regex(@"\(?0\d{2}\)?(-? *\d){7}");
+			var phoneRegex = new Regex(@"\(?0(-? *\d){2}\)?(-? *\d){7}"); // (@"\(?0\d{2}\)?(-? *\d){7}");
 
 			//var email = emailRegex.Match(testData[]);
 			foreach (var t in testData)

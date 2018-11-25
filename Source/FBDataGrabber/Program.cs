@@ -11,16 +11,19 @@ namespace FacebookDataGrabber
 	{
 		static void Main(string[] args)
 		{
-			using (var writer = new StreamWriter(File.Open("emails_and_phones_UTF8.csv", FileMode.Append, FileAccess.Write), Encoding.UTF8))
+			Console.WriteLine("New version");
+			//var spreadSheetsWriter = new GoogleSpreadSheetsWriter("1mBYYx3WFGayXH9BjVKS6CGLSUq9RYsHOeaLQC33qf88");
+			var spreadSheetsWriter = new GoogleSpreadSheetsWriter("14OYRfQ2-qdaqUvDOsdz08mwlSEyNZUeoYE0KRV1CAow");
+
+			using (var writer = File.AppendText("emails_and_phones.csv"))
 			{
-				var facebookGrabber = new FacebookGrabber("https://www.facebook.com/groups/256686171663733/requests/");
+				//var facebookGrabber = new FacebookGrabber("https://www.facebook.com/groups/256686171663733/requests/"); //U.Pak
+				var facebookGrabber = new FacebookGrabber("https://www.facebook.com/groups/736242360081825/requests/"); //T.Dugelna
 
 				facebookGrabber.FacebookLogin("lu.brendell@gmail.com", "{123456}");
 
-				//var n = facebookGrabber.GetRequestsNumber();
-
 				Thread.Sleep(2000);
-				//for (var i = 1; i <= n; i++)
+
 				Hyperlink hyperlink = null;
 				while (true)
 				{
@@ -34,20 +37,12 @@ namespace FacebookDataGrabber
 						}
 						catch (NoSuchElementException)
 						{
-							Console.WriteLine("New member requests do not found. Tring to refresh.");
+							Console.WriteLine("New member requests do not found. Trying to refresh.");
+							Thread.Sleep(30000);
 							facebookGrabber.RefreshPage();
-							Thread.Sleep(60000);
 						}
 					}
 					var data = facebookGrabber.GetEmailPhoneTextFromRequest(hyperlink.uid);
-
-					//if (data == null)
-					//{
-					//    //workIndex++;
-					//    continue;
-					//}
-
-					//writer.Write($"{data.Item1},{data.Item2},{data.Item3}");
 
 					string email = null;
 					string phone = null;
@@ -63,6 +58,8 @@ namespace FacebookDataGrabber
 							data = null;
 					}
 
+					spreadSheetsWriter.Write(hyperlink.name, hyperlink.hyperlink, email, phone, data);
+					
 					var text = $"{hyperlink.name},{hyperlink.hyperlink},{email},{phone},{data}";
 
 					writer.Write(text);
@@ -72,25 +69,12 @@ namespace FacebookDataGrabber
 					facebookGrabber.ConfirmRequest(hyperlink.uid);
 
 					Console.WriteLine(text);
-					//Console.ReadLine();
 					Thread.Sleep(500);
 				}
+				facebookGrabber.Dispose();
 			}
 
-            Console.WriteLine("Congrats!!!");
-
-		    /*
-            var requestNumberElement = RequestNumberElement(driver);
-            var n = requestNumberElement.Text;
-
-
-
-            //element.Click();
-            //Console.ReadLine();
-
-            Console.ReadLine();
-            driver.Close();
-            */
+			Console.WriteLine("Congrats!!!");
 		}
 
 		private static string FindEmail(string data)
@@ -101,7 +85,7 @@ namespace FacebookDataGrabber
 
 		private static string FindPhone(string data)
 		{
-			var emailRegex = new Regex(@"\(?0\d{2}\)?(-? *\d){7}"); // @"\(?0\d{2}\)?-? *\d{3}-? *\d{2}-? *\d{2}";
+			var emailRegex = new Regex(@"\(?0(-? *\d){2}\)?(-? *\d){7}");
 			var phone = emailRegex.Match(data).Value;
 
 			if (string.IsNullOrEmpty(phone))
