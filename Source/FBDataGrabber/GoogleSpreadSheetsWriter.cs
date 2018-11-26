@@ -9,7 +9,12 @@ using Google.Apis.Sheets.v4.Data;
 
 namespace FacebookDataGrabber
 {
-	public class GoogleSpreadSheetsWriter
+	public interface IWriter
+	{
+		void Write(params string[] columnsData);
+	}
+
+	public class GoogleSpreadSheetsWriter: IWriter
 	{
 		static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
 		static readonly string ApplicationName = "FacebookRobot";

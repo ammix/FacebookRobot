@@ -71,7 +71,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContactsParser.cs" />
     <Compile Include="FacebookGrabber.cs" />
+    <Compile Include="FacebookRobot.cs" />
     <Compile Include="GoogleSpreadSheetsWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
