@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacebookDataGrabber", "Source\FBDataGrabber\FacebookDataGrabber.csproj", "{5664825F-FE85-4F7D-82C5-CA7589830F97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacebookRobot", "Source\FBDataGrabber\FacebookRobot.csproj", "{5664825F-FE85-4F7D-82C5-CA7589830F97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelFileProcessor", "Source\ExcelFormer\ExcelFileProcessor.csproj", "{C696BB1A-6359-4869-8765-99E4512217C3}"
 EndProject

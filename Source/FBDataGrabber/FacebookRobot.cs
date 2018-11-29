@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -72,7 +73,7 @@ namespace FacebookDataGrabber
 			chromeDriver.Close();
 		}
 
-		public void SaveDataAndConfirmGroupMembers(IWriter writer)
+		public void SaveNewMemberContactsAndAddToGroup(IWriter writer, int delay)
 		{
 			while (true)
 			{
@@ -85,7 +86,7 @@ namespace FacebookDataGrabber
 
 				ConfirmRequest(facebookName.Uid);
 
-				Thread.Sleep(500);
+				Thread.Sleep(delay);
 			}
 		}
 
@@ -96,6 +97,8 @@ namespace FacebookDataGrabber
 			var adjustedData = ContactsParser.AdjustContactsString(email, phone, contacts);
 
 			writer.Write(hyperlink.Name, hyperlink.Link, email, phone, adjustedData);
+			var text = $"{hyperlink.Name},{hyperlink.Link},{email},{phone},{adjustedData}";
+			Console.WriteLine(text);
 		}
 
 		public void ConfirmRequest(string uid)
