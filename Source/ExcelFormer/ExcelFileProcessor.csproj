@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Class2.cs" />
     <Compile Include="ExcelFileFormaterZero.cs" />
     <Compile Include="ExcelFileFormer.cs" />
     <Compile Include="Program.cs" />
