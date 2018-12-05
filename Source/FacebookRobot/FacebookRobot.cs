@@ -4,7 +4,7 @@ using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-namespace FacebookDataGrabber
+namespace FacebookRobot
 {
 	public class FacebookRobot
 	{
@@ -73,7 +73,7 @@ namespace FacebookDataGrabber
 			chromeDriver.Close();
 		}
 
-		public void SaveNewMemberContactsAndAddToGroup(IWriter writer, int delay)
+		public void SaveNewMemberContactsAndAddToGroup(IWriter[] writers, int delay)
 		{
 			while (true)
 			{
@@ -82,7 +82,7 @@ namespace FacebookDataGrabber
 					break;
 
 				var memberContacts = GetNewMemberContacts(facebookName.Uid);
-				SaveMemberNameAndContacts(writer, facebookName, memberContacts);
+				SaveMemberNameAndContacts(writers, facebookName, memberContacts);
 
 				ConfirmRequest(facebookName.Uid);
 
@@ -90,15 +90,14 @@ namespace FacebookDataGrabber
 			}
 		}
 
-		private static void SaveMemberNameAndContacts(IWriter writer, Hyperlink hyperlink, string contacts)
+		private static void SaveMemberNameAndContacts(IWriter[] writers, Hyperlink hyperlink, string contacts)
 		{
 			var email = ContactsParser.FindEmail(contacts);
 			var phone = ContactsParser.FindPhone(contacts);
 			var adjustedData = ContactsParser.AdjustContactsString(email, phone, contacts);
 
-			writer.Write(hyperlink.Name, hyperlink.Link, email, phone, adjustedData);
-			var text = $"{hyperlink.Name},{hyperlink.Link},{email},{phone},{adjustedData}";
-			Console.WriteLine(text);
+			foreach (var writer in writers)
+				writer.Write(hyperlink.Name, hyperlink.Link, email, phone, adjustedData);
 		}
 
 		public void ConfirmRequest(string uid)

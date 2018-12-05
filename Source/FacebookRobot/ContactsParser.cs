@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace FacebookDataGrabber
+namespace FacebookRobot
 {
 	static class ContactsParser
 	{

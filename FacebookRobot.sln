@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacebookRobot", "Source\FBDataGrabber\FacebookRobot.csproj", "{5664825F-FE85-4F7D-82C5-CA7589830F97}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelFileProcessor", "Source\ExcelFormer\ExcelFileProcessor.csproj", "{C696BB1A-6359-4869-8765-99E4512217C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleSpreadSheets", "Source\GoogleSpreadSheets\GoogleSpreadSheets.csproj", "{6FE31B45-C141-41B2-81C9-16936B5F2DBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FacebookRobot", "Source\FacebookRobot\FacebookRobot.csproj", "{5664825F-FE85-4F7D-82C5-CA7589830F97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +15,6 @@ Global
 		{5664825F-FE85-4F7D-82C5-CA7589830F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5664825F-FE85-4F7D-82C5-CA7589830F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5664825F-FE85-4F7D-82C5-CA7589830F97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C696BB1A-6359-4869-8765-99E4512217C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C696BB1A-6359-4869-8765-99E4512217C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C696BB1A-6359-4869-8765-99E4512217C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C696BB1A-6359-4869-8765-99E4512217C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FE31B45-C141-41B2-81C9-16936B5F2DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FE31B45-C141-41B2-81C9-16936B5F2DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FE31B45-C141-41B2-81C9-16936B5F2DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FE31B45-C141-41B2-81C9-16936B5F2DBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
