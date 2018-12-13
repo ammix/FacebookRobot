@@ -1,6 +1,5 @@
-﻿using System;
-using System.Threading;
-
+﻿using System.Threading;
+using FacebookRobot.Writers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -29,7 +28,7 @@ namespace FacebookRobot
 			var loginElement = chromeDriver.FindElement(By.XPath("//*[@id='loginbutton']"));
 			loginElement.Submit();
 
-			Thread.Sleep(2000); //TODO: adjust
+			Thread.Sleep(4000); //TODO: adjust
 		}
 
 		public void RefreshPage()
@@ -68,29 +67,58 @@ namespace FacebookRobot
 			return text;
 		}
 
+		private void CloseMessanger()
+		{
+			var webElement = chromeDriver.FindElementByCssSelector("a[aria-label='Закрити вкладку'][href='#']");
+			webElement.Click();
+		}
+
 		public void Close()
 		{
 			chromeDriver.Close();
 		}
 
-		public void SaveNewMemberContactsAndAddToGroup(IWriter[] writers, int delay)
+		public void ProcessNewMemberRequests(IWriter[] writers, int delay)
 		{
 			while (true)
 			{
-				var facebookName = GetNewMemberName();
-				if (facebookName == null)
-					break;
+				Hyperlink facebookName = null;
+				while (true)
+				{
+					facebookName = GetNewMemberName();
+					if (facebookName != null)
+					{
+						break;
+					}
+					else
+					{
+						Thread.Sleep(300000); //5 min
+						RefreshPage();
+						Thread.Sleep(4000);  //TODO: adjust
+					}
+				}
 
 				var memberContacts = GetNewMemberContacts(facebookName.Uid);
-				SaveMemberNameAndContacts(writers, facebookName, memberContacts);
+				SaveNewMemberContacts(writers, facebookName, memberContacts);
 
-				ConfirmRequest(facebookName.Uid);
+				while (true)
+				{
+					try
+					{
+						ConfirmRequest(facebookName.Uid);
+						break;
+					}
+					catch (WebDriverException)
+					{
+						CloseMessanger();
+					}
+				}
 
 				Thread.Sleep(delay);
 			}
 		}
 
-		private static void SaveMemberNameAndContacts(IWriter[] writers, Hyperlink hyperlink, string contacts)
+		private static void SaveNewMemberContacts(IWriter[] writers, Hyperlink hyperlink, string contacts)
 		{
 			var email = ContactsParser.FindEmail(contacts);
 			var phone = ContactsParser.FindPhone(contacts);

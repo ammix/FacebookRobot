@@ -1,6 +1,5 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
+﻿using System.Configuration;
+using FacebookRobot.Writers;
 
 namespace FacebookRobot
 {
@@ -16,20 +15,21 @@ namespace FacebookRobot
 			var googleSpreadsheetId = ConfigurationManager.AppSettings["GoogleSpreadsheetId"];
 			var excelFilePath = ConfigurationManager.AppSettings["ExcelFilePath"];
 
-			Console.WriteLine("FacebookRobot started.");
 			var spreadSheetsWriter = new GoogleSpreadSheetsWriter(googleSpreadsheetId);
-			var excelFileWriter = new ExcelFileWriter(excelFilePath);
+			var excelFileWriter = new ExcelFileWriter(excelFilePath);				
+			var consoleWriter = new ConsoleWriter();
+			//consoleWriter.Write("FacebookRobot started.");
 
 			var facebookRobot = new FacebookRobot(facebookGroupId);
 			facebookRobot.FacebookLogin(facebookLogin, facebookPass);
 
-			var writers = new IWriter[] { spreadSheetsWriter, excelFileWriter };
-			facebookRobot.SaveNewMemberContactsAndAddToGroup(writers, memberProcessingDelay);
+			var writers = new IWriter[] { spreadSheetsWriter, excelFileWriter, consoleWriter }; //TODO: if failed writes into spreadsheet multiple times
+			facebookRobot.ProcessNewMemberRequests(writers, memberProcessingDelay);
 
 			excelFileWriter.Dispose();
 			facebookRobot.Close();
 
-			Console.WriteLine("FacebookRobot stopped.");
+			//consoleWriter.Write("FacebookRobot stopped.");
 		}
 	}
 }

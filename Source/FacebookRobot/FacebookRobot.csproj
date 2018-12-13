@@ -60,6 +60,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,11 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContactsParser.cs" />
-    <Compile Include="ExcelFileWriter.cs" />
+    <Compile Include="Writers\ConsoleWriter.cs" />
+    <Compile Include="Writers\ExcelFileWriter.cs" />
     <Compile Include="FacebookRobot.cs" />
-    <Compile Include="GoogleSpreadSheetsWriter.cs" />
+    <Compile Include="Writers\GoogleSpreadSheetsWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Writers\IWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
