@@ -73,7 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContactsParser.cs" />
-    <Compile Include="FacebookGrabber.cs" />
+    <Compile Include="ExcelFileWriter.cs" />
     <Compile Include="FacebookRobot.cs" />
     <Compile Include="GoogleSpreadSheetsWriter.cs" />
     <Compile Include="Program.cs" />

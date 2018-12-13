@@ -53,8 +53,9 @@ namespace SheetsQuickstart
 			// https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
 
 			IList<object> q = new List<object>();
-			q.Add("Іванна Іванівна");
-			q.Add("123456");
+			//q.Add("Іванна Іванівна");
+			//q.Add("123456");
+			q.Add("=HYPERLINK(\"https://www.facebook.com/100003905187715\"; \"Elisabeth Bondarenko\")");
 
 			var newData = new ValueRange();
 			newData.Values = new List<IList<object>>();
@@ -64,7 +65,7 @@ namespace SheetsQuickstart
 
 			var appendRequest = service.Spreadsheets.Values.Append(newData, spreadsheetId, range);
 
-			var valueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.RAW;
+			var valueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
 				//INPUTVALUEOPTIONUNSPECIFIED; // (SpreadsheetsResource.ValuesResource.UpdateRequest.ValueInputOptionEnum)0;  // TODO: Update placeholder value.
 			appendRequest.ValueInputOption = valueInputOption;
 

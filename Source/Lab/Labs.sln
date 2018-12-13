@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryToWritoToGoogleSpreadsheets", "GoogleSpreadSheets\TryToWritoToGoogleSpreadsheets.csproj", "{6FE31B45-C141-41B2-81C9-16936B5F2DBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryToReadHyperlinkFromGoogleSpreadsheets", "TryToReadHyperlinkFromGoogleSpreadsheets\TryToReadHyperlinkFromGoogleSpreadsheets.csproj", "{C0CC7ACD-D588-4BF8-B684-DB2891974AC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FE31B45-C141-41B2-81C9-16936B5F2DBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE31B45-C141-41B2-81C9-16936B5F2DBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE31B45-C141-41B2-81C9-16936B5F2DBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE31B45-C141-41B2-81C9-16936B5F2DBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0CC7ACD-D588-4BF8-B684-DB2891974AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0CC7ACD-D588-4BF8-B684-DB2891974AC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0CC7ACD-D588-4BF8-B684-DB2891974AC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0CC7ACD-D588-4BF8-B684-DB2891974AC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30F3C19D-813C-428A-8BCB-F5B2189DCE34}
+	EndGlobalSection
+EndGlobal
