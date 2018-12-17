@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using FacebookRobot.Writers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -33,22 +34,40 @@ namespace FacebookRobot
 
 		public void RefreshPage()
 		{
-			chromeDriver.Navigate().Refresh();
+			while (true)
+			{
+				try
+				{
+					chromeDriver.Navigate().Refresh();
+					return;
+				}
+				catch (Exception e) //TODO: look in Far
+				{
+					Console.WriteLine(e.StackTrace);
+					Thread.Sleep(2000); //TODO: adjust
+				}
+			}
 		}
 
 		public Hyperlink GetNewMemberName()
 		{
-			IWebElement nameElement;
-			try
+			while (true)
 			{
-				nameElement = chromeDriver.FindElementByCssSelector("li[data-testid] a[uid][href]:not(.img)");
+				try
+				{
+					var nameElement = chromeDriver.FindElementByCssSelector("li[data-testid] a[uid][href]:not(.img)");
+					return new Hyperlink(nameElement);
+				}
+				catch (NoSuchElementException)
+				{
+					return null;
+				}
+				catch (WebDriverException)
+				{
+					RefreshPage();
+					Thread.Sleep(4000);  //TODO: Adjust
+				}
 			}
-			catch (NoSuchElementException)
-			{
-				return null;
-			}
-
-			return new Hyperlink(nameElement);
 		}
 
 		public string GetNewMemberContacts(string uid)
@@ -78,7 +97,7 @@ namespace FacebookRobot
 			chromeDriver.Close();
 		}
 
-		public void ProcessNewMemberRequests(IWriter[] writers, int delay)
+		public void ProcessNewMemberRequests(IWriter[] writers, int betweenClicksDelay, int refreshDelay)
 		{
 			while (true)
 			{
@@ -92,7 +111,7 @@ namespace FacebookRobot
 					}
 					else
 					{
-						Thread.Sleep(300000); //5 min
+						Thread.Sleep(refreshDelay);
 						RefreshPage();
 						Thread.Sleep(4000);  //TODO: adjust
 					}
@@ -114,7 +133,7 @@ namespace FacebookRobot
 					}
 				}
 
-				Thread.Sleep(delay);
+				Thread.Sleep(betweenClicksDelay);
 			}
 		}
 

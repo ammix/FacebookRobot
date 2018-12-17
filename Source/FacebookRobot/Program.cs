@@ -10,7 +10,8 @@ namespace FacebookRobot
 			var facebookLogin = ConfigurationManager.AppSettings["FacebookLogin"];
 			var facebookPass = ConfigurationManager.AppSettings["FacebookPass"];
 			var facebookGroupId = ConfigurationManager.AppSettings["FacebookGroupId"];
-			var memberProcessingDelay = int.Parse(ConfigurationManager.AppSettings["MemberProcessingDelay"]);
+			var memberProcessingDelay = int.Parse(ConfigurationManager.AppSettings["MemberProcessingDelayInMs"]);
+			var refreshDelay = 60 * 1000 * int.Parse(ConfigurationManager.AppSettings["RefreshDelayInMin"]);
 
 			var googleSpreadsheetId = ConfigurationManager.AppSettings["GoogleSpreadsheetId"];
 			var excelFilePath = ConfigurationManager.AppSettings["ExcelFilePath"];
@@ -24,7 +25,7 @@ namespace FacebookRobot
 			facebookRobot.FacebookLogin(facebookLogin, facebookPass);
 
 			var writers = new IWriter[] { spreadSheetsWriter, excelFileWriter, consoleWriter }; //TODO: if failed writes into spreadsheet multiple times
-			facebookRobot.ProcessNewMemberRequests(writers, memberProcessingDelay);
+			facebookRobot.ProcessNewMemberRequests(writers, memberProcessingDelay, refreshDelay);
 
 			excelFileWriter.Dispose();
 			facebookRobot.Close();

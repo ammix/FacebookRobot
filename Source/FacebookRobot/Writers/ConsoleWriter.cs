@@ -14,11 +14,11 @@ namespace FacebookRobot.Writers
 
 			var sb = new StringBuilder();
 			sb.Append(name);
-			sb.Append(new String(' ', 35 - name.Length));
+			sb.Append(new String(' ', name.Length < 35 ? 35 - name.Length : 1));
 			sb.Append(email);
-			sb.Append(new String(' ', 35 - email.Length));
+			sb.Append(new String(' ', email.Length < 35 ? 35 - email.Length : 1));
 			sb.Append(phone);
-			sb.Append(new String(' ', 25 - phone.Length));
+			sb.Append(new String(' ', phone.Length < 25 ? 25 - phone.Length : 1));
 			sb.Append(data);
 
 			Console.WriteLine(sb);
