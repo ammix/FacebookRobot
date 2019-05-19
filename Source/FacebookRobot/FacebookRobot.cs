@@ -10,12 +10,15 @@ namespace FacebookRobot
 	{
 		private readonly ChromeDriver chromeDriver;
 
-		public FacebookRobot(string groupId)
+		public FacebookRobot(string chromeOptions, string groupId)
 		{
 			ChromeOptions options = new ChromeOptions();
-			options.AddArguments("--disable-notifications"); // to disable notification
+			options.AddArguments(chromeOptions);
+			//options.AddArguments("--disable-notifications --headless --disable-gpu"); // to disable notification
+			//options.AddArguments("--disable-notifications"); // to disable notification
 			chromeDriver = new ChromeDriver(options) {Url = $"https://www.facebook.com/groups/{groupId}/requests/"};
-			chromeDriver.Manage().Window.Maximize();
+
+			//chromeDriver.Manage().Window.Maximize();
 		}
 
 		public void FacebookLogin(string email, string pass)
@@ -28,6 +31,7 @@ namespace FacebookRobot
 
 			var loginElement = chromeDriver.FindElement(By.XPath("//*[@id='loginbutton']"));
 			loginElement.Submit();
+			//TODO: fail if password is invalid
 
 			Thread.Sleep(4000); //TODO: adjust
 		}
@@ -49,7 +53,7 @@ namespace FacebookRobot
 			}
 		}
 
-		public Hyperlink GetNewMemberName()
+		public Hyperlink GetNewMember()
 		{
 			while (true)
 			{
@@ -88,7 +92,7 @@ namespace FacebookRobot
 
 		private void CloseMessanger()
 		{
-			var webElement = chromeDriver.FindElementByCssSelector("a[aria-label='Закрити вкладку'][href='#']");
+			var webElement = chromeDriver.FindElementByCssSelector("a[aria-label='Закрити вкладку'][href='#']"); //TODO: investigate
 			webElement.Click();
 		}
 
@@ -99,32 +103,41 @@ namespace FacebookRobot
 
 		public void ProcessNewMemberRequests(IWriter[] writers, int betweenClicksDelay, int refreshDelay)
 		{
+			Hyperlink newMember = null;
+			Hyperlink previousMember = new Hyperlink();
 			while (true)
 			{
-				Hyperlink facebookName = null;
 				while (true)
 				{
-					facebookName = GetNewMemberName();
-					if (facebookName != null)
+					newMember = GetNewMember();
+					if (newMember != null)
 					{
+						if (newMember.Uid == previousMember.Uid)
+						{
+							RefreshPage();
+							Thread.Sleep(4000);  //TODO: adjust
+							continue;
+						}
+
+						previousMember = newMember;
 						break;
 					}
 					else
 					{
-						Thread.Sleep(refreshDelay);
+						Thread.Sleep(refreshDelay); //TODO: move into separeate function
 						RefreshPage();
 						Thread.Sleep(4000);  //TODO: adjust
 					}
 				}
 
-				var memberContacts = GetNewMemberContacts(facebookName.Uid);
-				SaveNewMemberContacts(writers, facebookName, memberContacts);
+				var memberContacts = GetNewMemberContacts(newMember.Uid);
+				SaveNewMemberContacts(writers, newMember, memberContacts);
 
 				while (true)
 				{
 					try
 					{
-						ConfirmRequest(facebookName.Uid);
+						PushConfirmButton(newMember.Uid);
 						break;
 					}
 					catch (WebDriverException)
@@ -144,21 +157,25 @@ namespace FacebookRobot
 			var adjustedData = ContactsParser.AdjustContactsString(email, phone, contacts);
 
 			foreach (var writer in writers)
-				writer.Write(hyperlink.Name, hyperlink.Link, email, phone, adjustedData);
+				writer.Write(hyperlink.Name, hyperlink.Link, email, phone, hyperlink.Uid, adjustedData);
 		}
 
-		public void ConfirmRequest(string uid)
+		public void PushConfirmButton(string uid)
 		{
 			var webElement = chromeDriver.FindElementByCssSelector($"[data-testid='{uid}'] button[name='approve']");
 			webElement.Click();
 		}
 	}
 
+	// TODO: struct vs class ?
 	public class Hyperlink
 	{
 		public string Name;
 		public string Link;
 		public string Uid;
+
+		public Hyperlink()
+		{ }
 
 		public Hyperlink(IWebElement nameElement)
 		{

@@ -15,13 +15,14 @@ namespace FacebookRobot
 
 			var googleSpreadsheetId = ConfigurationManager.AppSettings["GoogleSpreadsheetId"];
 			var excelFilePath = ConfigurationManager.AppSettings["ExcelFilePath"];
+			var chromeOptions = ConfigurationManager.AppSettings["ChromeOptions"];
 
 			var spreadSheetsWriter = new GoogleSpreadSheetsWriter(googleSpreadsheetId);
-			var excelFileWriter = new ExcelFileWriter(excelFilePath);				
+			var excelFileWriter = new ExcelFileWriter(excelFilePath);
 			var consoleWriter = new ConsoleWriter();
 			//consoleWriter.Write("FacebookRobot started.");
 
-			var facebookRobot = new FacebookRobot(facebookGroupId);
+			var facebookRobot = new FacebookRobot(chromeOptions, facebookGroupId);
 			facebookRobot.FacebookLogin(facebookLogin, facebookPass);
 
 			var writers = new IWriter[] { spreadSheetsWriter, excelFileWriter, consoleWriter }; //TODO: if failed writes into spreadsheet multiple times

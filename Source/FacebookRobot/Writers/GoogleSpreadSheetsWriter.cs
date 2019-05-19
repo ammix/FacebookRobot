@@ -47,7 +47,7 @@ namespace FacebookRobot.Writers
 
 			var columnList = new List<object>
 			{
-				$"=HYPERLINK(\"{columnsData[1]}\"; \"{columnsData[0]}\")", columnsData[2], columnsData[3], columnsData[4]
+				$"=HYPERLINK(\"{columnsData[1]}\"; \"{columnsData[0]}\")", columnsData[2], columnsData[3], columnsData[4], columnsData[5]
 			};
 			var body = new ValueRange {Values = new List<IList<object>> {columnList}};
 

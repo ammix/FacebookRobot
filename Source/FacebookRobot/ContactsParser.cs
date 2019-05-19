@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace FacebookRobot
 {
-	static class ContactsParser
+	public static class ContactsParser
 	{
 		public static string FindEmail(string data)
 		{
